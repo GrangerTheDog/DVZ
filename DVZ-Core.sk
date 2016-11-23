@@ -1,0 +1,33 @@
+on script load:
+  send "[DvZ] Loading V1.0" to console
+  if yaml value "version" from file "config.yml" does not exist:
+    send "[DvZ] First time startup detected, creating config!" to console
+    set yaml value "version" from file "config.yml" to "1.0"
+    send "[DvZ] Config created!" to console
+  if yaml value "version" from file "language.yml" does not exist:
+    send "[DvZ] No language file found, generatinf language.yml!" to console
+    set yaml value "help.title" from file "language.yml" to "&7========[&3D&7v&cZ&7]========"
+    set yaml value "help.help" from file "language.yml" to "Use /dvz help to see this message!"
+    set yaml value "help.start" from file "language.yml" to "Use /dvz start to start the game!"
+    set yaml value "version" from file "language.yml" to "1"
+    send "[DvZ] Language file created!" to console
+  set {dvz.lang.help.title} to yaml value "help.title" from file "language.yml"
+  set {dvz.lang.help.help} to yaml value "help.help" from file "language.yml"
+  set {dvz.lang.help.start} to yaml value "help.start" from file "language.yml"
+  set {dvz.config.version} to yaml value "version" from file "config.yml"
+  send "[DvZ] config is loaded!" to console
+command /dvz [<text>]:
+  trigger:
+    if arg 1 is "reload":
+      send "&8[&3D&7v&cZ&8]&a Reloading!"
+      set {dvz.lang.help.title} to yaml value "help.title" from file "language.yml"
+      set {dvz.lang.help.help} to yaml value "help.help" from file "language.yml"
+      set {dvz.lang.help.start} to yaml value "help.start" from file "language.yml"
+      set {dvz.config.version} to yaml value "version" from file "config.yml"     
+      send "&8[&3D&7v&cZ&8]&a Reload Complete!"
+    else:
+      send "%colored {dvz.lang.help.title}%"
+      send "%colored {dvz.lang.help.help}%"
+      send "%colored {dvz.lang.help.start}%"
+      send "Running version: %{dvz.config.version}%"
+      send "%colored {dvz.lang.help.title}%"
